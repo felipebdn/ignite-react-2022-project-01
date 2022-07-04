@@ -100,13 +100,19 @@
   max-height: 0;
 }
 
+
 .commentForm:focus-within footer{
   visibility: visible;
   max-height: none;
 }
 
-.commentForm button[type=submit]:hover{
+.commentForm button[type=submit]:not(:disabled):hover{
   background: var(--green-300);
+}
+
+.commentForm button[type=submit]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .commentList{

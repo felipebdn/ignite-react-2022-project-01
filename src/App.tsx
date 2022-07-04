@@ -9,6 +9,7 @@ import './global.css'
 
 const post = [
   {
+    id:1,
     author: {
       avatarUrl: 'https://avatars.githubusercontent.com/u/71861370?v=4',
       name: 'Felipe Barbosa',
@@ -31,6 +32,7 @@ const post = [
     publishedAt: new Date('2022-07-01 12:00:00')
   },
   {
+    id:2,
     author: {
       avatarUrl: 'https://avatars.githubusercontent.com/u/2254731?v=4',
       name: 'Rosa Barbosa',
@@ -65,6 +67,7 @@ export function App() {
           {post.map(post => {
             return (
               <Post 
+                key={post.id}
                 author={post.author}
                 content={post.content}
                 publishedAt={post.publishedAt}
