@@ -3,9 +3,26 @@ import ptBR from 'date-fns/locale/pt-BR'
 import styles from './Post.module.css'
 import { Comment } from './Comment'
 import { Avatar } from './Avatar'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
 
-export function Post({author, content, publishedAt}) {
+interface Author {
+  name: string
+  role: string
+  avatarUrl: string
+}
+
+interface Content {
+  type: 'paragraph' | 'link'
+  content: string
+}
+
+interface PostProps {
+  author: Author
+  publishedAt: Date
+  content: Content[]
+}
+
+export function Post({author, content, publishedAt}:PostProps) {
 
   const [comments, setComments] = useState([
     'Post muito bacana'
@@ -22,24 +39,24 @@ export function Post({author, content, publishedAt}) {
     addSuffix: true,
   })
 
-  function handleCreateNewComment(){
-    event?.preventDefault()
+  function handleCreateNewComment(event: FormEvent){
+    event.preventDefault()
     
     setComments([...comments, newCommentText])
     setNewCommentText('')
     
   }
 
-  function handleNewCommentChange() {
-    event?.target.setCustomValidity('')
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    event.target.setCustomValidity('')
     setNewCommentText(event?.target.value)
   }
 
-  function handleNewCommentInvalid() {
-    event?.target.setCustomValidity('Esse campo é obrigatório!')    
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
+    event.target.setCustomValidity('Esse campo é obrigatório!')    
   }
 
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     
     const commentsWithoutDeleteOne = comments.filter(comment => {
       return comment !== commentToDelete
@@ -97,7 +114,7 @@ export function Post({author, content, publishedAt}) {
           return (
             <Comment
               onDeleteComment={deleteComment}
-              key={content}
+              key={comment}
               content={comment}
             />
           )
